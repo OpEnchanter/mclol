@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                background-image: url("{{ url_for('static', filename='bg.png') }}");
+                background-size: cover;
+                overflow: hidden;
+            }
+
+            .contentContainer {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+            }
+
+            .link {
+                border-width: 5px;
+                border-color: rgb(101, 143, 66);
+                background-color: rgb(121, 163, 86);
+                border-style: solid;
+                width: 125px;
+                height: 50px;
+                box-shadow: 0px 10px rgb(41, 83, 6);
+                font-size: 20px;
+                color: white;
+                transition-duration: 100ms;
+                
+            }
+
+            .link:hover {
+                cursor: pointer;
+
+                transform: translateY(4px);
+                box-shadow: 0px 6px rgb(41, 83, 6);
+            }
+
+            .link:active {
+                transform: translateY(10px);
+                box-shadow: none;
+                border-color: rgb(81, 123, 46);
+                background-color: rgb(101, 143, 66);
+            }
+
+            .logo {
+                position: absolute;
+                width: 500px;
+                margin: 0px;
+                top: -700%;
+            }
+
+            h1 {
+                font-family: sans-serif;
+                color: white;
+                font-size: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="cover"></div>
+        <div class="contentContainer">
+            <h1>MCLOL</h1>
+            <div>
+                <button class="link" onclick="window.location.href='wiki'">Wiki</button>
+                <button class="link">Admin</button>
+                <button class="link">Test</button>
+            </div>
+            
+        </div>
+        <script>
+        </script>
+    </body>
+</html>
