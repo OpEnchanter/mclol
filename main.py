@@ -10,24 +10,35 @@ def home():
 def wiki():
     return render_template("wiki/index.html")
 
-@app.route('/api/admin', methods=['GET'])
+@app.route('/admin')
 def admin():
-    
+    return render_template("admin/index.html")
+
+@app.route('/api/admin', methods=['POST'])
+def api_admin():
     responseHtml = ""
 
+    # Load the HTML file
     with open("lockedPages/admin.html", 'r') as html:
         responseHtml = html.read()
 
-    path = request.path
-    reqData = request.get_json
+    # Get JSON data from request
+    reqData = request.get_json()
 
-    if (path == "/api/admin"):
-
-        return Response(responseHtml, content_type="text/html")
+    # Check if reqData is valid
+    if reqData is None:
+        return jsonify({"error": "Invalid JSON data"}), 400
     
-        
+    if reqData["key"] == "test":
+        return jsonify({
+            "response": True,
+            "html": responseHtml
+        })
 
-    return(jsonify("Invalid request path"))
+    return jsonify({
+        "response": False
+    })
+    
 
 if __name__ == "__main__":
     app.run(debug=True, port=80)

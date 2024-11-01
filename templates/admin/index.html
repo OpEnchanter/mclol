@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                background: url("{{ url_for('static', filename='bg.png' )}}");
+                background-size: cover;
+            }
+
+            .contentContainer {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                display: flex;
+                align-items: center;
+                vertical-align: center;
+                justify-content: center;
+                flex-direction: column;
+                background-color: rgba(0, 0, 0, 0.5);
+                backdrop-filter: blur(10px);
+                width: 95%;
+                height: 95%;
+                border-radius: 10px;
+            }
+
+            .link {
+                border-width: 5px;
+                border-color: rgb(101, 143, 66);
+                background-color: rgb(121, 163, 86);
+                border-style: solid;
+                width: 125px;
+                height: 50px;
+                box-shadow: 0px 10px rgb(41, 83, 6);
+                font-size: 20px;
+                color: white;
+                transition-duration: 100ms;
+                
+            }
+
+            .link:hover {
+                cursor: pointer;
+
+                transform: translateY(4px);
+                box-shadow: 0px 6px rgb(41, 83, 6);
+            }
+
+            .link:active {
+                transform: translateY(10px);
+                box-shadow: none;
+                border-color: rgb(81, 123, 46);
+                background-color: rgb(101, 143, 66);
+            }
+
+            .input {
+                border-width: 5px;
+                border-color: rgb(101, 143, 66);
+                background-color: rgb(121, 163, 86);
+                border-style: solid;
+                width: 250px;
+                height: 50px;
+                box-shadow: 0px 10px rgb(41, 83, 6);
+                font-size: 20px;
+                color: white;
+                transition-duration: 100ms;
+                margin: 10px;
+                padding: 5px;
+                text-align: center;
+            }
+
+            .row {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                vertical-align: center;
+                align-items: center;
+            }
+
+            .loginInfo {
+                color: red;
+                font-family: sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="contentContainer">
+            <div class="row">
+                <input type="password" placeholder="Login Key" id="pwd" class="input">
+                <button id="submit" class="link">Login</button>
+            </div>
+            <p id="loginInfo" class="loginInfo"></p>
+        </div>
+        
+    </body>
+
+    <script>
+        const pwdInp = document.getElementById("pwd");
+        const submit = document.getElementById("submit");
+        const url = '/api/admin';
+        const loginInfo = document.getElementById("loginInfo");
+
+
+        submit.addEventListener('mousedown', () => {
+
+            const data = {
+                "key": pwdInp.value,
+            };
+
+            console.log(data);
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+
+                if (data.response) {
+                    document.open();
+                    document.write(data.html);
+                    document.close();
+                } else {
+                    loginInfo.innerText = "Invalid Login Key";
+                }
+                
+
+                console.log('Success:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        
+    </script>
+</html>
