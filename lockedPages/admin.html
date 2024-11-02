@@ -14,15 +14,16 @@
                 left: 50%;
                 transform: translate(-50%, -50%);
                 display: flex;
-                align-items: center;
-                vertical-align: center;
-                justify-content: center;
                 flex-direction: column;
                 background-color: rgba(0, 0, 0, 0.5);
                 backdrop-filter: blur(10px);
                 width: 95%;
                 height: 95%;
                 border-radius: 10px;
+            }
+
+            h1 {
+                margin: 10px;
             }
 
             .link {
@@ -65,20 +66,175 @@
                 color: white;
                 font-size: 50px;
             }
+
+            .console {
+                border-width: 5px;
+                border-color: rgb(101, 143, 66);
+                background-color: rgb(121, 163, 86);
+                border-style: solid;
+                width: 50%;
+                height: 95%;
+                box-shadow: 0px 10px rgb(41, 83, 6);
+                font-size: 20px;
+                color: white;
+                transition-duration: 100ms;
+                
+                position: absolute;
+
+                margin: 10px;
+
+                top: 0px;
+                left: 100%;
+
+                transform: translate(-105%, 0px);
+
+                font-family: sans-serif;
+            }
+
+            .consoleOut {
+                width: 100%;
+                height: 90%;
+                overflow-y: scroll;
+            }
+
+            .cmd {
+                border-width: 5px;
+                border-color: rgb(101, 143, 66);
+                background-color: rgb(121, 163, 86);
+                border-style: solid;
+                width: 75%;
+                height: 35px;
+                box-shadow: 0px 10px rgb(41, 83, 6);
+                font-size: 20px;
+                color: white;
+                transition-duration: 100ms;
+                padding: 5px;
+                
+            }
+
+            .consoleOut > p {
+                margin: 10px;
+            }
+
+            .cmdbar {
+                width: 92.5%;
+                height: 55px;
+                position: absolute;
+                
+                top: 90%;
+
+                left: 50%;
+                
+                transform:translateX(-50%);
+
+                display: flex;
+                flex-direction: row;
+
+                justify-content: center;
+            }
+
+            .sendCommand {
+                border-width: 5px;
+                border-color: rgb(101, 143, 66);
+                background-color: rgb(121, 163, 86);
+                border-style: solid;
+                width: 15%;
+                height: 55px;
+                box-shadow: 0px 10px rgb(41, 83, 6);
+                font-size: 20px;
+                color: white;
+                transition-duration: 100ms;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: 10px;
+            }
+
+            .sendCommand:hover {
+                cursor: pointer;
+
+                transform: translateY(4px);
+                box-shadow: 0px 6px rgb(41, 83, 6);
+            }
+
+            .sendCommand:active {
+                transform: translateY(10px);
+                box-shadow: none;
+                border-color: rgb(81, 123, 46);
+                background-color: rgb(101, 143, 66);
+            }
         </style>
     </head>
     <body>
         <div class="cover"></div>
         <div class="contentContainer">
             <h1>ADMIN PANEL</h1>
-            <div>
-                <button class="link" onclick="window.location.href='wiki'">Wiki</button>
-                <button class="link">Admin</button>
-                <button class="link">Test</button>
-            </div>
             
+            <div>
+                <div class="console">
+                    <div class="consoleOut" id="console"></div>
+                    <div class="cmdbar">
+                        <input class="cmd" id="cmdInp">
+                        <button class="sendCommand" id="sendCommand" onclick="sendCommand()">
+                            <p>Run</p>
+                        </button>
+                    </div>
+                    
+                </div>
+            </div>
         </div>
         <script>
+            const sendCommandBtn = document.getElementById("sendCommand");
+            const adminConsole = document.getElementById("console");
+            var cmdInp = document.getElementById("cmdInp");
+
+            function sendCommand() {
+                console.log("Sending Command");
+
+                var cmdInp = document.getElementById("cmdInp");
+                var cmd = cmdInp.value
+
+
+                const data = {
+                    "skey": skey,
+                    "command": cmd
+                };
+
+                fetch("/api/command", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+
+                    if (data.response) {
+                        adminConsole.innerHTML += `<p>${data.result}</p>`
+                    } else {
+                        console.log("You are not logged in");
+                    }
+
+                    cmdInp.value = '';
+
+                    console.log('Success:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+
+            cmdInp.addEventListener("keydown", (event) => {
+                if (event.key === "Enter") {
+                    sendCommand();  // Call the sendCommand function
+                }
+            });
         </script>
     </body>
 </html>

@@ -93,20 +93,22 @@
         
     </body>
 
+    <script src="{{ url_for('static', filename='scripts/universal.js') }}"></script>
+
     <script>
         const pwdInp = document.getElementById("pwd");
         const submit = document.getElementById("submit");
         const url = '/api/admin';
         const loginInfo = document.getElementById("loginInfo");
 
+        var skey = null;
 
-        submit.addEventListener('mousedown', () => {
+
+        function login(key) {
 
             const data = {
-                "key": pwdInp.value,
+                "key": key,
             };
-
-            console.log(data);
 
             fetch(url, {
                 method: 'POST',
@@ -127,6 +129,10 @@
                     document.open();
                     document.write(data.html);
                     document.close();
+                    
+                    skey = data.skey;
+
+                    setCookie("key", key, 7);
                 } else {
                     loginInfo.innerText = "Invalid Login Key";
                 }
@@ -137,6 +143,16 @@
             .catch(error => {
                 console.error('Error:', error);
             });
+        }
+
+
+        if (getCookie("key")) {
+            login(getCookie("key"))
+        }
+
+
+        submit.addEventListener('mousedown', () => {
+            login(pwdInp.value);
         });
 
         
