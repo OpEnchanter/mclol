@@ -163,12 +163,23 @@
                 border-color: rgb(81, 123, 46);
                 background-color: rgb(101, 143, 66);
             }
+
+            .row {
+                flex-direction: row;
+                margin: 10px;
+            }
         </style>
     </head>
     <body>
         <div class="cover"></div>
         <div class="contentContainer">
             <h1>ADMIN PANEL</h1>
+
+            <div class="row">
+                <button class="link" id="start" onclick="startServer()">Start</button>
+                <button class="link" id="stop" onclick="stopServer()">Stop</button>
+            </div>
+            
             
             <div>
                 <div class="console">
@@ -198,6 +209,68 @@
                 const data = {
                     "skey": skey,
                     "command": cmd
+                };
+
+                fetch("/api/command", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+
+                    if (data.response) {
+                        adminConsole.innerHTML += `<p>${data.result}</p>`
+                    } else {
+                        console.log("You are not logged in");
+                    }
+
+                    cmdInp.value = '';
+
+                    console.log('Success:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+
+            function startServer() {
+                const data = {
+                    "skey": skey,
+                };
+
+                fetch("/api/startmcserve", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Success:', data);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            }
+
+            function stopServer() {
+                const data = {
+                    "skey": skey,
+                    "command": "stop"
                 };
 
                 fetch("/api/command", {

@@ -1,6 +1,11 @@
 from flask import Flask, render_template, request, jsonify, Response
-import random
+import random, subprocess, json
 from mcrcon import MCRcon
+
+config = {}
+
+with open("config.json", "r") as conf:
+    config = json.load(conf)
 
 app = Flask(__name__)
 
@@ -84,6 +89,34 @@ def api_command():
     return jsonify({
         "response": False
     })
+
+@app.route('/api/startmcserve', methods=['POST'])
+def api_start():
+    reqData = request.get_json()
+
+    if reqData["skey"] in sessionKeys:
+        if config["serverType"] == "windows":
+            process = subprocess.Popen(["startServer.bat"], stdout=subprocess.PIPE)
+
+            output, error = process.communicate()
+
+            print(output.decode())
+        elif config["serverType"] == "linux":
+            process = subprocess.Popen(["sudo sh startServer.sh"], stdout=subprocess.PIPE)
+
+            output, error = process.communicate()
+
+            print(output.decode())
+
+        return jsonify({
+            "response": True
+        })
+    
+    return jsonify({
+        "response": False
+    })
+
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=80)
