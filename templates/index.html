@@ -76,6 +76,10 @@
             }
 
             .chip:hover {
+                background-color: rgb(55, 55, 175);
+            }
+
+            .chip:active {
                 background-color: rgb(35, 35, 155);
             }
 
@@ -134,6 +138,7 @@
             <div class="overlay"></div>
             <div class="sidebar">
                 <h1>MCLOL</h1>
+                <button class="chip" onclick="navigateTo('/home')">Home</button>
                 <button class="chip" onclick="toggleWikiNav()">
                     <p>Wiki</p>
                     <img class="btnImg" id="wikiDropdownIco" src="{{ url_for('static', filename='dropdown.png') }}">
@@ -163,7 +168,7 @@
 
             function toggleWikiNav() {
                 if (!wikiSubNavState) {
-                    wikiSubNav.style.height = (35*numWikiPages)+(15*(numWikiPages+1)) + "px";
+                    wikiSubNav.style.height = (35*numWikiPages)+(15*(numWikiPages+1))-10 + "px";
                     wikiDropdownIco.style = "transform: rotateZ(180deg)";
                     wikiSubNavState = true;
                 } else {

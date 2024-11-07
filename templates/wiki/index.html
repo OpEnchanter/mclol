@@ -2,76 +2,53 @@
 <html>
     <head>
         <style>
-            html {
-                overflow: hidden;
-                padding: 0px;
-                margin: 0px;
+            @font-face {
+                font-family: "quicksand";
+                src: url(" {{ url_for('static', filename='quicksand.ttf') }} ");
             }
-
+            
             body {
-                width: 100%;
-                height: 100vh;
-                padding: 0px;
-                background-image: url("{{ url_for('static', filename='bg.png') }}");
-                background-size: cover;
-            }
-
-            .sidebar {
-                position: absolute;
-                width: 15%;
-                height: 100%;
-                margin: 0px;
-                padding: 0px;
-                top: 0px;
-                left: 0px;
-            }
-
-            .sidebarItem {
-                height: 35px;
-                width: 100%;
-                border: none;
-                background-color: rgba(0,0,0,0.25);
-                transition-duration: 150ms;
-                color: white;
-                border-top-right-radius: 10px;
-                border-bottom-right-radius: 10px;
-                backdrop-filter: blur(5px);
-            }
-
-            .sidebarItem:hover {
-                background-color: rgba(0,0,0,0.5);
-            }
-
-            .body {
-                width: 83%;
-                height: 98%;
-                position: absolute;
-                top: 1%;
-                left: 16%;
-                background-color: rgba(0,0,0, 0.5);
-                backdrop-filter: blur(5px);
-                border-radius: 10px;
-                font-family: sans-serif;
-                color: white;
+                display: flex;
+                padding: 10px;
+                flex-direction: column;
             }
 
             h1 {
-                padding-left: 30px;
+                margin: 0px;
+                color: rgb(165, 165, 195);
+                font-family: "quicksand";
             }
 
             p {
-                padding-left: 30px;
+                margin: 0px;
+                color: rgb(165, 165, 195);
+                font-family: "quicksand";
+                margin-top: 10px;
+            }
+
+            .divider {
+                height: 35px;
+            }
+
+            .indent {
+                margin-left: 15px;
+            }
+
+            h2 {
+                margin: 0px;
+                color: rgb(165, 165, 195);
+                font-family: "quicksand";
+                margin-top: 10px;
+            }
+
+            div {
+                padding: 0;
+                margin: 0;
             }
         </style>
     </head>
     <body>
-        <div class="sidebar">
-            <button class="sidebarItem" onclick="gotoPage('vanilla_plus')">Vanilla+ Recipes</button>
-            <button class="sidebarItem" onclick="gotoPage('pwr_crystals')">Power Crystals</button>
-            <button class="sidebarItem" onclick="gotoPage('spwn_egg')">Empty Spawn Egg</button>
-            <button class="sidebarItem" onclick="gotoPage('exp_repulsors')">EXP Repulsors</button>
-        </div>
-        <div class="body" id="wikiBody">
+        <div id="wikiBody">
             <h1>MCLOL Wiki</h1>
             <p>Welcome to the new and improved MCLOL wiki page!</p>
             <p>Check out the sidebar on the left of this page and find anything you want to find out more info about.</p>
@@ -79,26 +56,15 @@
 
         <script>
             const pages = {
-                "vanilla_plus": `
-                    <h1>Vanilla+ Crafting Recipes</h1>
-                    <p>Welcome to the new and improved MCLOL wiki page!</p>
-                    <p>Check out the sidebar on the left of this page and find anything you want to find out more info about.</p>
+                "magic": `
+                    <h1>Magic</h1>
+                    <p>This wiki page regards the magic system implemented on this server.</p>
+                    <p>Spells can be created by adding custom components to a spellbook (Ex. A fireball with a 3x cast modifier and a 2x damage modifier + A heal with a 2x strength modifier).</p>
                 `,
-                "pwr_crystals": `
-                    <h1>Power Crystals</h1>
-                    <p>Welcome to the new and improved MCLOL wiki page!</p>
-                    <p>Check out the sidebar on the left of this page and find anything you want to find out more info about.</p>
-                `,
-                "spwn_egg": `
-                    <h1>Empty Spawn Egg</h1>
-                    <p>Welcome to the new and improved MCLOL wiki page!</p>
-                    <p>Check out the sidebar on the left of this page and find anything you want to find out more info about.</p>
-                `,
-                "exp_repulsors": `
-                    <h1>EXP Repulsors</h1>
-                    <p>Welcome to the new and improved MCLOL wiki page!</p>
-                    <p>Check out the sidebar on the left of this page and find anything you want to find out more info about.</p>
-                `,
+                "recipes": `
+                    <h1>Crafting Recipes</h1>
+                    <p>This wiki page regards crafting recipes implemented on this server.</p>
+                `
             }
 
             const url = new URL(window.location.href);
