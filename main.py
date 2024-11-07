@@ -39,6 +39,10 @@ def wiki():
 def admin():
     return render_template("admin/index.html")
 
+@app.route("/home")
+def embed_home():
+    return render_template("home/index.html")
+
 @app.route('/api/admin', methods=['POST'])
 def api_admin():
     responseHtml = ""
@@ -54,7 +58,7 @@ def api_admin():
     if reqData is None:
         return jsonify({"error": "Invalid JSON data"}), 400
     
-    if reqData["key"] == "test":
+    if reqData["key"] == "fuwwyFemboiUWU":
         session = create_session()
 
         return jsonify({
