@@ -27,14 +27,14 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center; /* Ensure child items take the full height */
-                border-radius: 10px;
+                border-radius: 7.5px;
             }
 
             .sidebarBorder {
                 position: absolute; /* Ensures it stays within the sidebar */
                 width: 300px; /* Ensure it matches the sidebar width */
                 height: calc(100% - 20px); /* Full height of the sidebar */
-                background: url(" {{ url_for('static', filename='bg.png') }} ");
+                background: linear-gradient(0.15turn, #242038, #9067c6, #8d86c9, #cac4ce, #f7ece1);
                 border-radius: 10px;
                 box-sizing: border-box; /* Ensure padding and border don't overflow */
                 padding: 5px; /* Optional: add padding inside the border */
@@ -43,7 +43,7 @@
             }
 
             .overlay {
-                backdrop-filter: blur(10px);
+                backdrop-filter: blur(0px);
                 width: 100%;
                 height: 100%;
                 position: absolute;
@@ -59,15 +59,15 @@
 
             .chip {
                 width: 85%;
-                height: 25px;
+                height: 35px;
                 
                 border: none;
                 border-radius: 5px;
 
-                background-color: rgb(75, 75, 95);
+                background-color: rgb(75, 75, 195);
 
                 font-family: "quicksand";
-                color: rgb(165, 165, 195);
+                color: white;
                 font-size: 15px;
 
                 transition-duration: 150ms;
@@ -76,7 +76,12 @@
             }
 
             .chip:hover {
-                background-color: rgb(65, 65, 85);
+                background-color: rgb(35, 35, 155);
+            }
+
+            .chip p {
+                position: relative;
+                transform: translate(0, -50%);
             }
 
             .content {
@@ -92,6 +97,36 @@
                 left: 320px;
             }
 
+            .sidebarSection {
+                overflow:hidden;
+                transition-duration: 150ms;
+                width: 100%;
+                height: 0px;
+                display:block;
+                align-items: center;
+                text-align: center;
+                padding: 0px;
+            }
+
+            .sidebarSection button {
+                margin-top: 0px;
+                margin: 10px;
+                width: 75%;
+            }
+
+            .btnImg {
+                width: 25px;
+                height: 25px;
+                
+                position:relative;
+
+                top: calc(-100% - 12.5px);
+                left: calc(50% - 12.5px);
+
+                transition-duration: 150ms;
+                transform: rotateZ(0deg);
+            }
+
         </style>
     </head>
     <body>
@@ -99,13 +134,44 @@
             <div class="overlay"></div>
             <div class="sidebar">
                 <h1>MCLOL</h1>
-                <button class="chip">Wiki</button>
-                <button class="chip">Admin Panel</button>
+                <button class="chip" onclick="toggleWikiNav()">
+                    <p>Wiki</p>
+                    <img class="btnImg" id="wikiDropdownIco" src="{{ url_for('static', filename='dropdown.png') }}">
+                </button>
+                <div class="sidebarSection" id="wikiSubNav">
+                    <button class="chip" onclick="navigateTo('/wiki')">Home</button>
+                    <button class="chip" onclick="navigateTo('/wiki?page=magic')">Magic</button>
+                    <button class="chip" onclick="navigateTo('/wiki?page=recipes')">Misc Recipes</button>
+                </div>
+                <button class="chip" onclick="navigateTo('/admin')">Admin Panel</button>
             </div>
         </div>
 
-        <iframe src="/home" frameborder="0" class="content">Test</iframe>
+        <iframe src="/home" frameborder="0" class="content" id="content">Test</iframe>
         <script>
+            const content = document.getElementById("content");
+
+            function navigateTo(page) {
+                content.src = page;
+            }
+
+            const wikiSubNav = document.getElementById("wikiSubNav");
+            var wikiSubNavState = false;
+            var wikiDropdownIco = document.getElementById("wikiDropdownIco");
+
+            const numWikiPages = 3;
+
+            function toggleWikiNav() {
+                if (!wikiSubNavState) {
+                    wikiSubNav.style.height = (35*numWikiPages)+(15*(numWikiPages+1)) + "px";
+                    wikiDropdownIco.style = "transform: rotateZ(180deg)";
+                    wikiSubNavState = true;
+                } else {
+                    wikiSubNav.style.height = "0px";
+                    wikiDropdownIco.style = "transform: rotateZ(0deg)";
+                    wikiSubNavState = false;
+                }
+            }
         </script>
     </body>
 </html>
