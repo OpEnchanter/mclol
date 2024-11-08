@@ -45,6 +45,41 @@
                 padding: 0;
                 margin: 0;
             }
+
+            .itemSlot {
+                margin: 0px;
+                background-color: #8b8b8b;
+                border-color: rgb(216, 216, 216);
+
+                border-style: inset;
+                
+                width: 48px;
+                height: 48px;
+
+                border-style: solid;
+                border-width: 5px;
+
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .itemSlot img {
+                width: 32px;
+                height: 32px;
+                image-rendering: pixelated;
+            }
+
+            .recipe {
+                display:flex;
+                flex-direction: column;
+                margin: 10px;
+            }
+
+            .recipeRow {
+                display: flex;
+                flex-direction: row;
+            }
         </style>
     </head>
     <body>
@@ -52,6 +87,7 @@
             <h1>MCLOL Wiki</h1>
             <p>Welcome to the new and improved MCLOL wiki page!</p>
             <p>Check out the sidebar on the left of this page and find anything you want to find out more info about.</p>
+            <div class="recipe" id="testRecipe"></div>
         </div>
 
         <script>
@@ -78,6 +114,19 @@
             function gotoPage(pageName) {
                 document.location.href = `?page=${pageName}`;
             }
+
+            function populateRecipe(id, items) {
+                var grid = document.getElementById(id);
+                for (i = 0; i < 3; i++) {
+                    grid.innerHTML += `<div class="recipeRow"><div class="itemSlot"><img src="/static/minecraft/`+ items[i*3] +`.png"></div><div class="itemSlot"><img src="/static/minecraft/`+ items[i*3+1] +`.png"></div><div class="itemSlot"><img src="/static/minecraft/`+ items[i*3+2] +`.png"></div></div>`;
+                }
+            }
+
+            populateRecipe("testRecipe", [
+                "item/stick", "air", "item/stick",
+                "item/stick", "item/diamond", "item/stick",
+                "item/stick", "item/diamond", "item/stick",
+            ]);
         </script>
     </body>
 </html>
