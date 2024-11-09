@@ -41,6 +41,13 @@
                 margin-top: 10px;
             }
 
+            h3 {
+                margin: 0px;
+                color: rgb(165, 165, 195);
+                font-family: "quicksand";
+                margin-top: 10px;
+            }
+
             div {
                 padding: 0;
                 margin: 0;
@@ -57,11 +64,15 @@
                 height: 48px;
 
                 border-style: solid;
-                border-width: 5px;
+                border-width: 0px;
+
+                margin: 5px;
 
                 display: flex;
                 align-items: center;
                 justify-content: center;
+
+                border-radius: 5px;
             }
 
             .itemSlot img {
@@ -80,9 +91,23 @@
                 border-style: solid;
                 border-width: 5px;
                 border-color: rgb(216, 216, 216);
+                background-color: rgb(216, 216, 216);
+
+                border-radius: 10px;
             }
 
             .recipeRow {
+                display: flex;
+                flex-direction: row;
+            }
+
+            .columnCard {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .rowCard {
                 display: flex;
                 flex-direction: row;
             }
@@ -93,7 +118,6 @@
             <h1>MCLOL Wiki</h1>
             <p>Welcome to the new and improved MCLOL wiki page!</p>
             <p>Check out the sidebar on the left of this page and find anything you want to find out more info about.</p>
-            <div class="recipe" id="testRecipe"></div>
         </div>
 
         <script>
@@ -106,6 +130,16 @@
                 "recipes": `
                     <h1>Crafting Recipes</h1>
                     <p>This wiki page regards crafting recipes implemented on this server.</p>
+
+                    <div class="divider"></div>
+
+                    <h2>Recipes</h2>
+                    <div class="indent rowCard">
+                        <div class="columnCard">
+                            <p>Name Tag</p>
+                            <div class="recipe" id="nameTagRecipe"></div>
+                        </div>
+                    </div>
                 `
             }
 
@@ -123,14 +157,17 @@
 
             function populateRecipe(id, items) {
                 var grid = document.getElementById(id);
-                for (i = 0; i < 3; i++) {
-                    grid.innerHTML += `<div class="recipeRow"><div class="itemSlot"><img src="/static/minecraft/`+ items[i*3] +`.png"></div><div class="itemSlot"><img src="/static/minecraft/`+ items[i*3+1] +`.png"></div><div class="itemSlot"><img src="/static/minecraft/`+ items[i*3+2] +`.png"></div></div>`;
+
+                if (grid != null) {
+                    for (i = 0; i < 3; i++) {
+                        grid.innerHTML += `<div class="recipeRow"><div class="itemSlot"><img src="/static/minecraft/`+ items[i*3] +`.png"></div><div class="itemSlot"><img src="/static/minecraft/`+ items[i*3+1] +`.png"></div><div class="itemSlot"><img src="/static/minecraft/`+ items[i*3+2] +`.png"></div></div>`;
+                    }
                 }
             }
 
-            populateRecipe("testRecipe", [
-                "air", "air", "air",
-                "air", "item/enchanted_book", "air",
+            populateRecipe("nameTagRecipe", [
+                "item/ink_sac", "item/feather", "air",
+                "item/paper", "item/paper", "item/string",
                 "air", "air", "air",
             ]);
         </script>
