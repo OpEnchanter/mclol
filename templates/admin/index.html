@@ -3,68 +3,63 @@
     <head>
         <style>
             body {
-                background: url("{{ url_for('static', filename='bg.png' )}}");
-                background-size: cover;
+                display: flex;
+                align-items: left;
+
+                background-color: none;
+
+                padding: 10px;
             }
 
+            @font-face {
+                font-family: "quicksand";
+                src: url(" {{ url_for('static', filename='quicksand.ttf') }} ");
+            }
             
-            
-
-            .link {
-                border-width: 5px;
-                border-color: rgb(101, 143, 66);
-                background-color: rgb(121, 163, 86);
-                border-style: solid;
-                width: 125px;
-                height: 50px;
-                box-shadow: 0px 10px rgb(41, 83, 6);
-                font-size: 20px;
-                color: white;
-                transition-duration: 100ms;
-                
-            }
-
-            .link:hover {
-                cursor: pointer;
-
-                transform: translateY(4px);
-                box-shadow: 0px 6px rgb(41, 83, 6);
-            }
-
-            .link:active {
-                transform: translateY(10px);
-                box-shadow: none;
-                border-color: rgb(81, 123, 46);
-                background-color: rgb(101, 143, 66);
-            }
-
             .input {
-                border-width: 5px;
-                border-color: rgb(101, 143, 66);
-                background-color: rgb(121, 163, 86);
-                border-style: solid;
-                width: 250px;
-                height: 50px;
-                box-shadow: 0px 10px rgb(41, 83, 6);
-                font-size: 20px;
+                width: 150px;
+                height: 25px;
+
+                background-color: rgb(75, 75, 195);
+
                 color: white;
-                transition-duration: 100ms;
-                margin: 10px;
-                padding: 5px;
+
+                font-family: "quicksand";
+
+                border: none;
+
+                border-radius: 5px;
+
+                transition-duration: 150ms;
+
+
                 text-align: center;
             }
 
-            .row {
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                vertical-align: center;
-                align-items: center;
+            .link {
+                width: 150px;
+                height: 25px;
+
+                background-color: rgb(75, 75, 195);
+
+                color: white;
+
+                font-family: "quicksand";
+
+                border: none;
+
+                border-radius: 5px;
+
+                transition-duration: 150ms;
+            }
+
+            .link:hover {
+                background-color: rgb(55, 55, 175);
             }
 
             .loginInfo {
                 color: red;
-                font-family: sans-serif;
+                font-family: "quicksand";
             }
         </style>
     </head>

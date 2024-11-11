@@ -3,37 +3,26 @@
     <head>
         <style>
             body {
-                background-image: url("static/bg.png");
                 background-size: cover;
                 overflow: hidden;
-            }
-
-            .contentContainer {
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                display: flex;
-                flex-direction: column;
-                background-color: rgba(0, 0, 0, 0.5);
-                backdrop-filter: blur(10px);
-                width: 95%;
-                height: 95%;
-                border-radius: 10px;
             }
 
             h1 {
                 margin: 10px;
             }
 
+            @font-face {
+                font-family: "quicksand";
+                src: url("/static/quicksand.ttf");
+            }
+
             .link {
                 border-width: 5px;
-                border-color: rgb(101, 143, 66);
-                background-color: rgb(121, 163, 86);
+                border-color: rgb(45, 45, 55);
+                background-color: rgb(25, 25, 35);
                 border-style: solid;
                 width: 125px;
                 height: 50px;
-                box-shadow: 0px 10px rgb(41, 83, 6);
                 font-size: 20px;
                 color: white;
                 transition-duration: 100ms;
@@ -69,24 +58,23 @@
 
             .console {
                 border-width: 5px;
-                border-color: rgb(101, 143, 66);
-                background-color: rgb(121, 163, 86);
+                border-color: rgb(45, 45, 55);
+                background-color: rgb(25, 25, 35);
                 border-style: solid;
-                width: 50%;
-                height: 95%;
-                box-shadow: 0px 10px rgb(41, 83, 6);
+                width: 97%;
+                height: 97%;
                 font-size: 20px;
                 color: white;
                 transition-duration: 100ms;
                 
                 position: absolute;
 
+                border-radius: 10px;
+
                 margin: 10px;
 
                 top: 0px;
-                left: 100%;
-
-                transform: translate(-105%, 0px);
+                left: 0px;
 
                 font-family: sans-serif;
             }
@@ -97,22 +85,34 @@
                 overflow-y: scroll;
             }
 
+            .consoleOut::-webkit-scrollbar {
+                background-color: rgba(0, 0, 0, 0);  
+            }
+
+            .consoleOut::-webkit-scrollbar-thumb {
+                background-color: rgb(65, 65, 75);
+                border-radius: 5px;
+                width: 5px;
+            }
+
             .cmd {
+                font-family: "quicksand";
                 border-width: 5px;
-                border-color: rgb(101, 143, 66);
-                background-color: rgb(121, 163, 86);
+                border-color: rgb(65, 65, 75);
+                background-color: rgb(45, 45, 55);
                 border-style: solid;
                 width: 75%;
                 height: 35px;
-                box-shadow: 0px 10px rgb(41, 83, 6);
+                box-shadow: 0px 10px rgb(35, 35, 45);
                 font-size: 20px;
                 color: white;
                 transition-duration: 100ms;
                 padding: 5px;
-                
+                border-radius: 10px;
             }
 
             .consoleOut > p {
+                font-family: "quicksand";
                 margin: 10px;
             }
 
@@ -134,13 +134,14 @@
             }
 
             .sendCommand {
+                font-family: "quicksand";
                 border-width: 5px;
-                border-color: rgb(101, 143, 66);
-                background-color: rgb(121, 163, 86);
+                border-color: rgb(65, 65, 75);
+                background-color: rgb(45, 45, 55);
                 border-style: solid;
                 width: 15%;
                 height: 55px;
-                box-shadow: 0px 10px rgb(41, 83, 6);
+                box-shadow: 0px 10px rgb(35, 35, 45);
                 font-size: 20px;
                 color: white;
                 transition-duration: 100ms;
@@ -148,20 +149,21 @@
                 align-items: center;
                 justify-content: center;
                 margin-left: 10px;
+                border-radius: 10px
             }
 
             .sendCommand:hover {
                 cursor: pointer;
 
                 transform: translateY(4px);
-                box-shadow: 0px 6px rgb(41, 83, 6);
+                box-shadow: 0px 6px rgb(35, 35, 45);
             }
 
             .sendCommand:active {
                 transform: translateY(10px);
                 box-shadow: none;
-                border-color: rgb(81, 123, 46);
-                background-color: rgb(101, 143, 66);
+                border-color: rgb(55, 55, 65);
+                background-color: rgb(35, 35, 45);
             }
 
             .row {
@@ -173,19 +175,11 @@
     <body>
         <div class="cover"></div>
         <div class="contentContainer">
-            <h1>ADMIN PANEL</h1>
-
-            <div class="row">
-                <button class="link" id="start" onclick="startServer()">Start</button>
-                <button class="link" id="stop" onclick="stopServer()">Stop</button>
-            </div>
-            
-            
             <div>
                 <div class="console">
                     <div class="consoleOut" id="console"></div>
                     <div class="cmdbar">
-                        <input class="cmd" id="cmdInp">
+                        <input class="cmd" id="cmdInp" placeholder="Type a command...">
                         <button class="sendCommand" id="sendCommand" onclick="sendCommand()">
                             <p>Run</p>
                         </button>

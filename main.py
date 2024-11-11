@@ -58,7 +58,7 @@ def api_admin():
     if reqData is None:
         return jsonify({"error": "Invalid JSON data"}), 400
     
-    if reqData["key"] == "fuwwyFemboiUWU":
+    if reqData["key"] == "test":
         session = create_session()
 
         return jsonify({
@@ -84,11 +84,19 @@ def api_command():
             mcr = MCRcon(rconIp, rconPassword, rconPort)
             mcr.connect()
 
-        result = mcr.command(reqData["command"])
-        return jsonify({
-            "response": True,
-            "result": result
-        })
+        try:
+            result = mcr.command(reqData["command"])
+            return jsonify({
+                "response": True,
+                "result": result
+            })
+        except Exception as e:
+            cmd = reqData["command"]
+            return jsonify({
+                "response":True,
+                "result": f"An unexpected error occurred running command '{cmd}'",
+                "error": e
+            })
 
     return jsonify({
         "response": False
