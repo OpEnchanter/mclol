@@ -94,8 +94,7 @@ def api_command():
             cmd = reqData["command"]
             return jsonify({
                 "response":True,
-                "result": f"An unexpected error occurred running command '{cmd}'",
-                "error": e
+                "result": f"An unexpected error occurred running command '{cmd}'"
             })
 
     return jsonify({
